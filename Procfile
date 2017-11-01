@@ -1,0 +1,1 @@
+web: java -jar target/biocoop-poissonnerie-1.0.jar
