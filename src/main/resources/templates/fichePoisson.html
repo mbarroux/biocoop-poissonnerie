@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'fichePoisson')}">
+
+<body>
+
+
+<div class="container">
+  <h1>Fiche poisson</h1>
+
+  <p th:text="${poisson.nomScientifique}"/>
+
+  <ul th:each="zp : ${poisson.zonesDePeche}">
+    <li th:text="${zp.libelle}"/>
+  </ul>
+</div>
+
+</body>
+</html>
