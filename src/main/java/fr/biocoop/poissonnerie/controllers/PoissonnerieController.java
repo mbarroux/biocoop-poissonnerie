@@ -85,6 +85,8 @@ public class PoissonnerieController {
                 .filter(zp -> zp.getParent() == null)
                 .collect(toList()); // niveau 1 seulement
 
+        zonesPecheParent.forEach(x -> LOGGER.debug("zone de peche : " + x));
+
         List<ZonePeche> zonesPecheParent2 = poisson.getZonesDePeche()
                 .stream()
                 .filter(zp -> zp.getParent() != null)
