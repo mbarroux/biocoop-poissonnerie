@@ -14,7 +14,7 @@ import static java.util.Collections.unmodifiableList;
 
 public class PoissonDto {
 
-    private final static DateFormat monthFormatter = new SimpleDateFormat("MMM", Locale.FRENCH);
+    private final static DateFormat monthFormatter = new SimpleDateFormat("MMMMMMMMMMMM", Locale.FRENCH);
 
     public static class Builder {
         private int code;
