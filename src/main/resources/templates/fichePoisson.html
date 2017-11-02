@@ -7,6 +7,7 @@
 <div class="container">
   <h1>Fiche poisson</h1>
 
+  <p th:text="${poisson.espece}"/>
   <p th:text="${poisson.nomScientifique}"/>
 
   <ul th:each="zp : ${poisson.zonesDePeche}">

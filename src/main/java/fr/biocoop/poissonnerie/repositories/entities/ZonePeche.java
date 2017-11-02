@@ -21,4 +21,44 @@ public class ZonePeche {
 
     @ManyToMany(mappedBy = "zonesDePeche")
     private List<Poisson> poissons;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public ZonePeche getParent() {
+        return parent;
+    }
+
+    public void setParent(ZonePeche parent) {
+        this.parent = parent;
+    }
+
+    public List<ZonePeche> getSousZones() {
+        return sousZones;
+    }
+
+    public void setSousZones(List<ZonePeche> sousZones) {
+        this.sousZones = sousZones;
+    }
+
+    public List<Poisson> getPoissons() {
+        return poissons;
+    }
+
+    public void setPoissons(List<Poisson> poissons) {
+        this.poissons = poissons;
+    }
 }
