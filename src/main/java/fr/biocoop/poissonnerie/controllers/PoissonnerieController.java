@@ -91,6 +91,7 @@ public class PoissonnerieController {
                 .collect(toList()); // niveau 2 sans niveau 1 explicitement dans la liste
 
         return Stream.concat(zonesPecheParent.stream(), zonesPecheParent2.stream())
+                .distinct()
                 .sorted(comparing(ZonePeche::getCode))
                 .collect(toList());
     }

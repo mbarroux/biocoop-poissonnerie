@@ -18,10 +18,10 @@
   <ul th:each="zonePeche : ${poisson.zonesDePeche}"
       th:object="${zonePeche}"
       th:if="${zonePeche.niveau1}">
-    <li th:text="'Code : ' + ${zonePeche.code} + ' - Libellé : ' + ${zonePeche.libelle}"/>
+    <li th:text="'Zone ' + ${zonePeche.code} + ' : ' + ${zonePeche.libelle}"/>
 
     <ul th:each="sousZonePeche : ${zonePeche.sousZones}">
-      <li th:text="'Code : ' + ${sousZonePeche.code} + ' - Libellé : ' + ${sousZonePeche.libelle}"/>
+      <li th:text="'Sous-zone ' + ${sousZonePeche.code} + ' : ' + ${sousZonePeche.libelle}"/>
     </ul>
   </ul>
 </div>
