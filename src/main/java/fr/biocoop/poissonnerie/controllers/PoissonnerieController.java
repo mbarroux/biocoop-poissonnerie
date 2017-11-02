@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -30,7 +28,7 @@ import static java.util.stream.Collectors.toList;
 public class PoissonnerieController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PoissonnerieController.class);
-    private static final DateFormat DF = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
+    private static final DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final PoissonnerieRepository poissonnerieRepository;
 
@@ -78,7 +76,7 @@ public class PoissonnerieController {
     private List<ZonePecheDto> buildListeZonesDePecheDto(Poisson poisson) {
         return findZonesDePecheParentes(poisson).stream().map(zp -> {
 
-            LOGGER.debug("zone de peche : " + zp);
+                    LOGGER.debug("zone de peche : " + zp);
                     return new ZonePecheDto.Builder()
                             .setCode(zp.getCode())
                             .setCodeZoneParent(zp.getCode())
