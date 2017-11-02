@@ -2,7 +2,7 @@ package fr.biocoop.poissonnerie.controllers.dtos;
 
 import fr.biocoop.poissonnerie.repositories.entities.TypePoisson;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -118,8 +118,8 @@ public class PoissonDto {
 
     private boolean commercialisationPossible(Date dateDebut, Date dateFin) {
         LocalDate debutJour = LocalDate.now();
-        LocalDate dateDebutVente = dateDebut.toLocalDate();
-        LocalDate dateFinVente = dateFin.toLocalDate();
+        LocalDate dateDebutVente = ((java.sql.Date) dateDebut).toLocalDate();
+        LocalDate dateFinVente = ((java.sql.Date) dateFin).toLocalDate();
 
         return (debutJour.isAfter(dateDebutVente) || debutJour.isEqual(dateDebutVente))
                 && (debutJour.isBefore(dateFinVente) || debutJour.isEqual(dateFinVente));
