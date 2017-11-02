@@ -2,11 +2,10 @@ package fr.biocoop.poissonnerie.controllers.dtos;
 
 import fr.biocoop.poissonnerie.repositories.entities.TypePoisson;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -117,12 +116,12 @@ public class PoissonDto {
         return commercialisationPossible;
     }
 
-    private boolean commercialisationPossible(Date dateDebutVente, Date dateFinVente) {
-        Instant debutJour = ZonedDateTime.now().toInstant();
-        Instant dateDebutVenteInstant = dateDebutVente.toInstant();
-        Instant dateFinVenteInstant = dateFinVente.toInstant();
+    private boolean commercialisationPossible(Date dateDebut, Date dateFin) {
+        LocalDate debutJour = LocalDate.now();
+        LocalDate dateDebutVente = dateDebut.toLocalDate();
+        LocalDate dateFinVente = dateFin.toLocalDate();
 
-        return (debutJour.isAfter(dateDebutVenteInstant) || debutJour.equals(dateDebutVenteInstant))
-                && (debutJour.isBefore(dateFinVenteInstant) || debutJour.equals(dateFinVenteInstant));
+        return (debutJour.isAfter(dateDebutVente) || debutJour.isEqual(dateDebutVente))
+                && (debutJour.isBefore(dateFinVente) || debutJour.isEqual(dateFinVente));
     }
 }

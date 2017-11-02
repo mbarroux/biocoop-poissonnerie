@@ -4,7 +4,7 @@ create table poissons(
   nom_scientifique varchar(255),
   date_debut_vente date,
   date_fin_vente date,
-  type smallint not null -- 1 = poisson / 2 = crustace
+  type varchar2(50) not null -- POISSON / CRUSTACE
 );
 
 create table zones_de_peche(

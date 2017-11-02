@@ -1,7 +1,7 @@
 package fr.biocoop.poissonnerie.repositories.entities;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public class Poisson {
     @Temporal(TemporalType.DATE)
     private Date dateFinVente;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private TypePoisson type;
 
     @JoinTable(name = "poissons_zones_de_peche",

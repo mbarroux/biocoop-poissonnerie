@@ -61,4 +61,12 @@ public class ZonePeche {
     public void setPoissons(List<Poisson> poissons) {
         this.poissons = poissons;
     }
+
+    @Override
+    public String toString() {
+        return "ZonePeche{" +
+                "code='" + code + '\'' +
+                ", libelle='" + libelle + '\'' +
+                '}';
+    }
 }
