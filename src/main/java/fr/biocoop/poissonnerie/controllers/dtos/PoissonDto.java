@@ -13,7 +13,7 @@ import static java.util.Collections.unmodifiableList;
 
 public class PoissonDto {
 
-    private final static DateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+    private final static DateFormat monthFormatter = new SimpleDateFormat("MMM");
 
     public static class Builder {
         private int code;
@@ -77,8 +77,8 @@ public class PoissonDto {
         this.code = builder.code;
         this.espece = builder.espece;
         this.nomScientifique = builder.nomScientifique;
-        this.dateDebutVente = dateFormatter.format(builder.dateDebutVente);
-        this.dateFinVente = dateFormatter.format(builder.dateFinVente);
+        this.dateDebutVente = monthFormatter.format(builder.dateDebutVente);
+        this.dateFinVente = monthFormatter.format(builder.dateFinVente);
         this.type = builder.type.getLibelle();
         this.zonesDePeche = builder.zonesDePeche != null ? unmodifiableList(builder.zonesDePeche) : emptyList();
         this.commercialisationPossible = commercialisationPossible(builder.dateDebutVente, builder.dateFinVente);

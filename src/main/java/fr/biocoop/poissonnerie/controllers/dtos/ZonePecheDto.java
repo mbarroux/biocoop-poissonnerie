@@ -9,6 +9,7 @@ public class ZonePecheDto {
 
     public static class Builder {
         private String code;
+        private String codeZoneParent;
         private String libelle;
         private List<ZonePecheDto> sousZones;
 
@@ -18,6 +19,11 @@ public class ZonePecheDto {
 
         public Builder setCode(String code) {
             this.code = code;
+            return this;
+        }
+
+        public Builder setCodeZoneParent(String codeZoneParent) {
+            this.codeZoneParent = codeZoneParent;
             return this;
         }
 
@@ -33,17 +39,23 @@ public class ZonePecheDto {
     }
 
     private final String code;
+    private final String codeZoneParent;
     private final String libelle;
     private final List<ZonePecheDto> sousZones;
 
     private ZonePecheDto(Builder builder) {
         this.code = builder.code;
+        this.codeZoneParent = builder.codeZoneParent;
         this.libelle = builder.libelle;
         this.sousZones = builder.sousZones != null ? unmodifiableList(builder.sousZones) : emptyList();
     }
 
     public String getCode() {
         return code;
+    }
+
+    public String getCodeZoneParent() {
+        return codeZoneParent;
     }
 
     public String getLibelle() {
@@ -54,7 +66,11 @@ public class ZonePecheDto {
         return sousZones;
     }
 
+    public boolean isNiveau1() {
+        return !isNiveau2();
+    }
+
     public boolean isNiveau2() {
-        return getSousZones().isEmpty();
+        return getSousZones().isEmpty() && getCodeZoneParent() != null;
     }
 }

@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface PoissonnerieRepository extends JpaRepository<Poisson, Integer> {
 
-    List<Poisson> findByEspeceLike(String espece);
+    List<Poisson> findByEspeceIgnoreCaseContaining(String espece);
 
 }

@@ -5,29 +5,27 @@
 
 
 <div class="container">
-  <h1 th:text="'Fiche ' + ${poisson.espece}" />
+  <h1 th:text="'Fiche ' + ${poisson.type} + ' : ' + ${poisson.espece}" />
 
-  <p th:text="'Nom scientifique ' + ${poisson.nomScientifique}"/>
+  <p th:text="'Nom scientifique : ' + ${poisson.nomScientifique}"/>
 
   <p th:text="'Date de début de commercialisation possible : ' + ${poisson.dateDebutVente}"/>
 
   <p th:text="'Date de fin de commercialisation possible : ' + ${poisson.dateFinVente}"/>
 
-  <p th:text="'Commercialisation possible ? ' + ${poisson.commercialisationPossible}"/>
+  <p th:text="'Commercialisation possible ? ' + ${poisson.commercialisationPossible}? 'Oui' : 'Non'"/>
 
   <p>Zones de pêche FAO :</p>
 
-  <ul th:each="zonePeche : ${poisson.zonesDePeche.?[niveau2 == false]}">
+  <ul th:each="zonePeche : ${poisson.zonesDePeche}"
+      <!--th:object="${zonePeche}"-->
+      th:if="${zonePeche.niveau1}">
     <li th:text="'Code : ' + ${zonePeche.code} + ' - Libellé : ' + ${zonePeche.libelle}"/>
 
     <ul th:each="sousZonePeche : ${zonePeche.sousZones}">
       <li th:text="'Code : ' + ${sousZonePeche.code} + ' - Libellé : ' + ${sousZonePeche.libelle}"/>
     </ul>
   </ul>
-
-  <!--<ul th:each="zp : ${poisson.zonesDePeche}">-->
-    <!--<li th:text="'Code : ' + ${zp.code} + ' - Libellé : ' + ${zp.libelle}"/>-->
-  <!--</ul>-->
 </div>
 
 </body>

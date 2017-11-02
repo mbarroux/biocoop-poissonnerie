@@ -40,7 +40,7 @@ public class PoissonnerieController {
     @ResponseBody
         // TODO ?
     List<Poisson> findPoissonsByNom(@RequestParam("nom") String nom) {
-        List<Poisson> poissons = poissonnerieRepository.findByEspeceLike(nom);
+        List<Poisson> poissons = poissonnerieRepository.findByEspeceIgnoreCaseContaining(nom);
         return poissons;
     }
 
@@ -75,6 +75,7 @@ public class PoissonnerieController {
         return zonesPecheParent.stream().map(zp ->
                 new ZonePecheDto.Builder()
                         .setCode(zp.getCode())
+                        .setCodeZoneParent(zp.getCode())
                         .setLibelle(zp.getLibelle())
                         .setSousZones(buildListeSousZonesDePecheDto(zp))
                         .build()
