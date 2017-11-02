@@ -7,16 +7,16 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+    <nav class="navbar navbar-default navbar-static-top navbar-inverse" th:fragment="navbar(activeTab)">
         <div class="container">
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li th:class="${activeTab == 'home'} ? 'active' : null">
                     <a href="/"><span class="glyphicon glyphicon-home"></span> Accueil</a>
                 </li>
-                <li>
+                <li th:class="${activeTab == 'poissons-fiches'} ? 'active' : null">
                     <a href="/poissons-fiches"><span class="glyphicons glyphicons-fishes"></span> Trouver une espèce de poisson</a>
                 </li>
-                <li>
+                <li th:class="${activeTab == 'poissons-commercialisables'} ? 'active' : null">
                     <a href="/poissons-commercialisables"><span class="glyphicons glyphicons-money"></span> Liste des poissons commercialisables</a>
                 </li>
             </ul>
