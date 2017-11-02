@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'poissons-commercialisables')}">
+
+<body>
+
+
+<div class="container">
+  <h1 th:text="'Liste des poissons commercialisables au' + ${dateDuJour}"/>
+
+  <ul th:each="poisson : ${poissons}">
+    <li th:text="${poisson.espece}" th:href="'/poisson/' + ${poisson.code}" />
+  </ul>
+</div>
+
+</body>
+</html>

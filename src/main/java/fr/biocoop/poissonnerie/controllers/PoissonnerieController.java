@@ -8,6 +8,7 @@ import fr.biocoop.poissonnerie.repositories.entities.ZonePeche;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,22 @@ public class PoissonnerieController {
     @RequestMapping("/")
     String index() {
         return "index";
+    }
+
+    @RequestMapping("/poissons-fiches")
+    String fichesPoissons() {
+        return "poissons-fiches";
+    }
+
+    @RequestMapping("/poissons-commercialisables")
+    String poissonsCommercialisables(Map<String, Object> model) {
+        List<Poisson> poissons = poissonnerieRepository.findAll(new Sort(Sort.Direction.ASC, "espece"));
+
+        // TODO prendre en compte la date
+        model.put("poissons", poissons.stream().map(this::toPoissonDto).collect(toList()));
+        model.put("dateDuJour", DF.format(LocalDate.now()));
+
+        return "poissons-commercialisables";
     }
 
     @RequestMapping("/poisson/findByNom")
