@@ -61,7 +61,6 @@ public class PoissonnerieController {
     }
 
     private PoissonDto toPoissonDto(Poisson poisson) {
-        LOGGER.debug("zones de peche du poisson : " + buildListeZonesDePecheDto(poisson));
         return new PoissonDto.Builder()
                 .setCode(poisson.getCode())
                 .setEspece(poisson.getEspece())
@@ -74,16 +73,12 @@ public class PoissonnerieController {
     }
 
     private List<ZonePecheDto> buildListeZonesDePecheDto(Poisson poisson) {
-        return findZonesDePecheParentes(poisson).stream().map(zp -> {
-
-                    LOGGER.debug("zone de peche : " + zp);
-                    return new ZonePecheDto.Builder()
-                            .setCode(zp.getCode())
-                            .setCodeZoneParent(zp.getCode())
-                            .setLibelle(zp.getLibelle())
-                            .setSousZones(buildListeSousZonesDePecheDto(zp.getCode(), poisson))
-                            .build();
-                }
+        return findZonesDePecheParentes(poisson).stream().map(zp ->
+                new ZonePecheDto.Builder()
+                        .setCode(zp.getCode())
+                        .setLibelle(zp.getLibelle())
+                        .setSousZones(buildListeSousZonesDePecheDto(zp.getCode(), poisson))
+                        .build()
         ).collect(toList());
     }
 
@@ -111,6 +106,7 @@ public class PoissonnerieController {
                 .filter(zp -> Objects.equals(zp.getParent().getCode(), codeZonePecheParent))
                 .map(zp -> new ZonePecheDto.Builder()
                         .setCode(zp.getCode())
+                        .setCodeZoneParent(codeZonePecheParent)
                         .setLibelle(zp.getLibelle())
                         .build()
                 ).collect(toList());
