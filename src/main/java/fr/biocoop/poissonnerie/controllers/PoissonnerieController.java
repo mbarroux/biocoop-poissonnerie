@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -64,18 +62,8 @@ public class PoissonnerieController {
                 .build();
 
         model.put("poisson", poissonDto);
-        model.put("commercialisationPossible", isCommercialisationPossible(poisson));
 
         return "fichePoisson";
-    }
-
-    private boolean isCommercialisationPossible(Poisson poisson) {
-        Instant debutJour = ZonedDateTime.now().toInstant();
-        Instant dateDebutVente = poisson.getDateDebutVente().toInstant();
-        Instant dateFinVente = poisson.getDateFinVente().toInstant();
-
-        return (debutJour.isAfter(dateDebutVente) || debutJour.equals(dateDebutVente))
-                && (debutJour.isBefore(dateFinVente) || debutJour.equals(dateFinVente));
     }
 
     private List<ZonePecheDto> buildListeZonesDePecheDto(Poisson poisson) {

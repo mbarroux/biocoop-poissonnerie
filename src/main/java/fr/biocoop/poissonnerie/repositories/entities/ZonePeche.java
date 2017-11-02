@@ -66,7 +66,6 @@ public class ZonePeche {
     public String toString() {
         return "ZonePeche{" +
                 "code='" + code + '\'' +
-                ", libelle='" + libelle + '\'' +
                 '}';
     }
 }
