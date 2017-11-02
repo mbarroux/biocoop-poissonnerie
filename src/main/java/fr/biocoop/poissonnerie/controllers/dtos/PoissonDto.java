@@ -1,5 +1,7 @@
 package fr.biocoop.poissonnerie.controllers.dtos;
 
+import fr.biocoop.poissonnerie.repositories.entities.TypePoisson;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -9,7 +11,6 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
-import static java.util.Optional.ofNullable;
 
 public class PoissonDto {
 
@@ -21,7 +22,7 @@ public class PoissonDto {
         private String nomScientifique;
         private Date dateDebutVente;
         private Date dateFinVente;
-        private String type;
+        private TypePoisson type;
         private List<ZonePecheDto> zonesDePeche;
 
         public PoissonDto build() {
@@ -53,7 +54,7 @@ public class PoissonDto {
             return this;
         }
 
-        public Builder setType(String type) {
+        public Builder setType(TypePoisson type) {
             this.type = type;
             return this;
         }
@@ -77,9 +78,9 @@ public class PoissonDto {
         this.code = builder.code;
         this.espece = builder.espece;
         this.nomScientifique = builder.nomScientifique;
-        this.dateDebutVente = ofNullable(builder.dateDebutVente).map(dateFormatter::format).orElse(null);
-        this.dateFinVente = ofNullable(builder.dateFinVente).map(dateFormatter::format).orElse(null);
-        this.type = builder.type;
+        this.dateDebutVente = dateFormatter.format(builder.dateDebutVente);
+        this.dateFinVente = dateFormatter.format(builder.dateFinVente);
+        this.type = builder.type.getLibelle();
         this.zonesDePeche = builder.zonesDePeche != null ? unmodifiableList(builder.zonesDePeche) : emptyList();
         this.commercialisationPossible = commercialisationPossible(builder.dateDebutVente, builder.dateFinVente);
     }

@@ -5,6 +5,8 @@ import fr.biocoop.poissonnerie.controllers.dtos.ZonePecheDto;
 import fr.biocoop.poissonnerie.repositories.PoissonnerieRepository;
 import fr.biocoop.poissonnerie.repositories.entities.Poisson;
 import fr.biocoop.poissonnerie.repositories.entities.ZonePeche;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,8 @@ import static java.util.stream.Collectors.toList;
 
 @Controller
 public class PoissonnerieController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PoissonnerieController.class);
 
     private final PoissonnerieRepository poissonnerieRepository;
 
@@ -47,6 +51,7 @@ public class PoissonnerieController {
                              Map<String, Object> model) {
 
         Poisson poisson = poissonnerieRepository.getOne(code);
+        logger.debug("poisson : " + poisson);
 
         PoissonDto poissonDto = new PoissonDto.Builder()
                 .setCode(poisson.getCode())
@@ -54,7 +59,7 @@ public class PoissonnerieController {
                 .setNomScientifique(poisson.getNomScientifique())
                 .setDateDebutVente(poisson.getDateDebutVente())
                 .setDateFinVente(poisson.getDateFinVente())
-                .setType(poisson.getType().getLibelle())
+                .setType(poisson.getType())
                 .setZonesDePeche(buildListeZonesDePecheDto(poisson))
                 .build();
 

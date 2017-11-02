@@ -3,6 +3,7 @@ package fr.biocoop.poissonnerie.repositories.entities;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "poissons")
@@ -88,5 +89,37 @@ public class Poisson {
 
     public void setZonesDePeche(List<ZonePeche> zonesDePeche) {
         this.zonesDePeche = zonesDePeche;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Poisson poisson = (Poisson) o;
+        return code == poisson.code &&
+                Objects.equals(espece, poisson.espece) &&
+                Objects.equals(nomScientifique, poisson.nomScientifique) &&
+                Objects.equals(dateDebutVente, poisson.dateDebutVente) &&
+                Objects.equals(dateFinVente, poisson.dateFinVente) &&
+                type == poisson.type &&
+                Objects.equals(zonesDePeche, poisson.zonesDePeche);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code, espece, nomScientifique, dateDebutVente, dateFinVente, type, zonesDePeche);
+    }
+
+    @Override
+    public String toString() {
+        return "Poisson{" +
+                "code=" + code +
+                ", espece='" + espece + '\'' +
+                ", nomScientifique='" + nomScientifique + '\'' +
+                ", dateDebutVente=" + dateDebutVente +
+                ", dateFinVente=" + dateFinVente +
+                ", type=" + type +
+                ", zonesDePeche=" + zonesDePeche +
+                '}';
     }
 }
