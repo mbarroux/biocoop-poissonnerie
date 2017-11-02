@@ -38,7 +38,6 @@ public class PoissonnerieController {
 
     @RequestMapping("/poisson/findByNom")
     @ResponseBody
-        // TODO ?
     List<Poisson> findPoissonsByNom(@RequestParam("nom") String nom) {
         List<Poisson> poissons = poissonnerieRepository.findByEspeceIgnoreCaseContaining(nom);
         return poissons;

@@ -7,13 +7,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 
 public class PoissonDto {
 
-    private final static DateFormat monthFormatter = new SimpleDateFormat("MMM");
+    private final static DateFormat monthFormatter = new SimpleDateFormat("MMM", Locale.FRENCH);
 
     public static class Builder {
         private int code;
@@ -79,7 +80,7 @@ public class PoissonDto {
         this.nomScientifique = builder.nomScientifique;
         this.dateDebutVente = monthFormatter.format(builder.dateDebutVente);
         this.dateFinVente = monthFormatter.format(builder.dateFinVente);
-        this.type = builder.type.getLibelle();
+        this.type = builder.type.getLibelle().toLowerCase();
         this.zonesDePeche = builder.zonesDePeche != null ? unmodifiableList(builder.zonesDePeche) : emptyList();
         this.commercialisationPossible = commercialisationPossible(builder.dateDebutVente, builder.dateFinVente);
     }
