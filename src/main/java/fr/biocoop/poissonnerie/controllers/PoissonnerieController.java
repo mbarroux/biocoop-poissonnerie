@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
@@ -73,7 +74,7 @@ public class PoissonnerieController {
                         .setCode(zp.getCode())
                         .setCodeZoneParent(zp.getCode())
                         .setLibelle(zp.getLibelle())
-                        .setSousZones(buildListeSousZonesDePecheDto(zp))
+                        .setSousZones(buildListeSousZonesDePecheDto(zp, poisson))
                         .build()
         ).collect(toList());
     }
@@ -96,13 +97,16 @@ public class PoissonnerieController {
                 .collect(toList());
     }
 
-    private List<ZonePecheDto> buildListeSousZonesDePecheDto(ZonePeche zonePecheParent) {
-        return zonePecheParent.getSousZones().stream().map(zp ->
-                new ZonePecheDto.Builder()
-                        .setCode(zp.getCode())
-                        .setLibelle(zp.getLibelle())
-                        .build()
-        ).collect(toList());
+    private List<ZonePecheDto> buildListeSousZonesDePecheDto(ZonePeche zonePecheParent, Poisson poisson) {
+        return poisson.getZonesDePeche().stream()
+                .filter(zp -> zp.getParent() != null)
+                .filter(zp -> Objects.equals(zp.getCode(), zonePecheParent.getCode()))
+                .map(zp ->
+                        new ZonePecheDto.Builder()
+                                .setCode(zp.getCode())
+                                .setLibelle(zp.getLibelle())
+                                .build()
+                ).collect(toList());
     }
 
 }
