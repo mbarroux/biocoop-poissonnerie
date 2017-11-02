@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 @Controller
 public class PoissonnerieController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PoissonnerieController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PoissonnerieController.class);
 
     private final PoissonnerieRepository poissonnerieRepository;
 
@@ -38,9 +40,9 @@ public class PoissonnerieController {
 
     @RequestMapping("/poisson/findByNom")
     @ResponseBody
-    List<Poisson> findPoissonsByNom(@RequestParam("nom") String nom) {
+    List<PoissonDto> findPoissonsByNom(@RequestParam("nom") String nom) {
         List<Poisson> poissons = poissonnerieRepository.findByEspeceIgnoreCaseContaining(nom);
-        return poissons;
+        return poissons.stream().map(this::toPoissonDto).collect(toList());
     }
 
     @RequestMapping("/poisson/{code}")
@@ -48,9 +50,13 @@ public class PoissonnerieController {
                              Map<String, Object> model) {
 
         Poisson poisson = poissonnerieRepository.getOne(code);
-        logger.debug("poisson : " + poisson);
+        model.put("poisson", toPoissonDto(poisson));
 
-        PoissonDto poissonDto = new PoissonDto.Builder()
+        return "fichePoisson";
+    }
+
+    private PoissonDto toPoissonDto(Poisson poisson) {
+        return new PoissonDto.Builder()
                 .setCode(poisson.getCode())
                 .setEspece(poisson.getEspece())
                 .setNomScientifique(poisson.getNomScientifique())
@@ -59,19 +65,10 @@ public class PoissonnerieController {
                 .setType(poisson.getType())
                 .setZonesDePeche(buildListeZonesDePecheDto(poisson))
                 .build();
-
-        model.put("poisson", poissonDto);
-
-        return "fichePoisson";
     }
 
     private List<ZonePecheDto> buildListeZonesDePecheDto(Poisson poisson) {
-        List<ZonePeche> zonesPecheParent = poisson.getZonesDePeche()
-                .stream()
-                .filter(zp -> zp.getParent() == null)
-                .collect(toList());
-
-        return zonesPecheParent.stream().map(zp ->
+        return findZonesDePecheParentes(poisson).stream().map(zp ->
                 new ZonePecheDto.Builder()
                         .setCode(zp.getCode())
                         .setCodeZoneParent(zp.getCode())
@@ -79,6 +76,23 @@ public class PoissonnerieController {
                         .setSousZones(buildListeSousZonesDePecheDto(zp))
                         .build()
         ).collect(toList());
+    }
+
+    private List<ZonePeche> findZonesDePecheParentes(Poisson poisson) {
+        List<ZonePeche> zonesPecheParent = poisson.getZonesDePeche()
+                .stream()
+                .filter(zp -> zp.getParent() == null)
+                .collect(toList()); // niveau 1 seulement
+
+        List<ZonePeche> zonesPecheParent2 = poisson.getZonesDePeche()
+                .stream()
+                .filter(zp -> zp.getParent() != null)
+                .map(ZonePeche::getParent)
+                .collect(toList()); // niveau 2 sans niveau 1 explicitement dans la liste
+
+        return Stream.concat(zonesPecheParent.stream(), zonesPecheParent2.stream())
+                .sorted(comparing(ZonePeche::getCode))
+                .collect(toList());
     }
 
     private List<ZonePecheDto> buildListeSousZonesDePecheDto(ZonePeche zonePecheParent) {
