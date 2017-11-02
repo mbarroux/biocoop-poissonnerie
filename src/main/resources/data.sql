@@ -291,7 +291,7 @@ INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(41, 'V
 
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(42, 'VII');
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(42, 'VIII');
-INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(42, '32');
+--INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(42, '32'); -- TODO la zone de peche 32 n'existe a priori pas ?
 
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(43, 'VIIh');
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(43, 'VIIIa');
