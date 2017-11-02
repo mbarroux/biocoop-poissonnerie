@@ -11,7 +11,7 @@
 
   <p th:text="'Dates de commercialisation possible : de ' + ${poisson.dateDebutVente} + ' à ' + ${poisson.dateFinVente}" />
 
-  <p th:text="'Commercialisation possible ? ' + (${poisson.commercialisationPossible}? 'Oui' : 'Non')"/>
+  <p th:text="'Commercialisation possible le ${dateDuJour} ? ' + (${poisson.commercialisationPossible}? 'Oui' : 'Non')"/>
 
   <p>Zones de pêche FAO :</p>
 

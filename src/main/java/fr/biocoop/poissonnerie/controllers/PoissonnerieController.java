@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -26,6 +30,7 @@ import static java.util.stream.Collectors.toList;
 public class PoissonnerieController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PoissonnerieController.class);
+    private static final DateFormat DF = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
 
     private final PoissonnerieRepository poissonnerieRepository;
 
@@ -49,14 +54,16 @@ public class PoissonnerieController {
     @RequestMapping("/poisson/{code}")
     String findPoissonByCode(@PathVariable("code") int code,
                              Map<String, Object> model) {
-
         Poisson poisson = poissonnerieRepository.getOne(code);
+
         model.put("poisson", toPoissonDto(poisson));
+        model.put("dateDuJour", DF.format(LocalDate.now()));
 
         return "fichePoisson";
     }
 
     private PoissonDto toPoissonDto(Poisson poisson) {
+        LOGGER.debug("zones de peche du poisson : " + buildListeZonesDePecheDto(poisson));
         return new PoissonDto.Builder()
                 .setCode(poisson.getCode())
                 .setEspece(poisson.getEspece())
@@ -69,13 +76,16 @@ public class PoissonnerieController {
     }
 
     private List<ZonePecheDto> buildListeZonesDePecheDto(Poisson poisson) {
-        return findZonesDePecheParentes(poisson).stream().map(zp ->
-                new ZonePecheDto.Builder()
-                        .setCode(zp.getCode())
-                        .setCodeZoneParent(zp.getCode())
-                        .setLibelle(zp.getLibelle())
-                        .setSousZones(buildListeSousZonesDePecheDto(zp.getCode(), poisson))
-                        .build()
+        return findZonesDePecheParentes(poisson).stream().map(zp -> {
+
+            LOGGER.debug("zone de peche : " + zp);
+                    return new ZonePecheDto.Builder()
+                            .setCode(zp.getCode())
+                            .setCodeZoneParent(zp.getCode())
+                            .setLibelle(zp.getLibelle())
+                            .setSousZones(buildListeSousZonesDePecheDto(zp.getCode(), poisson))
+                            .build();
+                }
         ).collect(toList());
     }
 
@@ -84,8 +94,6 @@ public class PoissonnerieController {
                 .stream()
                 .filter(zp -> zp.getParent() == null)
                 .collect(toList()); // niveau 1 seulement
-
-        zonesPecheParent.forEach(x -> LOGGER.debug("zone de peche : " + x));
 
         List<ZonePeche> zonesPecheParent2 = poisson.getZonesDePeche()
                 .stream()
