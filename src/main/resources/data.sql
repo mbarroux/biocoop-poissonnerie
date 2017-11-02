@@ -1,12 +1,3 @@
-create table poissons(
-  code smallint primary key,
-  espece varchar(255) not null,
-  nom_scientifique varchar(255),
-  date_debut_vente date,
-  date_fin_vente date,
-  type smallint not null -- 1 = poisson / 2 = crustace
-);
-
 -- Poissons
 INSERT INTO poissons(code, espece, nom_scientifique, type, date_debut_vente, date_fin_vente) VALUES(1, 'Anchois', 'Engraulis encrasicolus', 1, '2017-04-01', '2017-09-30');
 INSERT INTO poissons(code, espece, nom_scientifique, type, date_debut_vente, date_fin_vente) VALUES(2, 'Barbue', 'Scophthalmus rhombus', 1, '2017-06-01', '2018-01-31');
@@ -60,13 +51,6 @@ INSERT INTO poissons(code, espece, nom_scientifique, type, date_debut_vente, dat
 INSERT INTO poissons(code, espece, nom_scientifique, type, date_debut_vente, date_fin_vente) VALUES(48, 'Tourteau', 'Cancer pagurus', 2, '2017-06-01', '2017-10-31');
 
 
-
-create table zones_de_peche(
-  code varchar2(20) primary key,
-  libelle varchar(255) not null,
-  code_zone_parent varchar2(20) default null,
-  foreign key (code_zone_parent) references zones_de_peche(code)
-);
 
 INSERT INTO zones_de_peche(code, libelle) VALUES('61', 'Pacifique Nord-Ouest');
 INSERT INTO zones_de_peche(code, libelle) VALUES('67', 'Pacifique Nord-Est');
@@ -152,15 +136,6 @@ INSERT INTO zones_de_peche(code, libelle, code_zone_parent) VALUES('XIV','Est du
 INSERT INTO zones_de_peche(code, libelle, code_zone_parent) VALUES('XIVa','Nord-est du Groenland', 27);
 INSERT INTO zones_de_peche(code, libelle, code_zone_parent) VALUES('XIVb','Sud-est du Groenland', 27);
 
-
-create table poissons_zones_de_peche(
-  code_poisson smallint,
-  code_zone_peche varchar2(20),
-  commentaire varchar2(255),
-  primary key(code_poisson, code_zone_peche),
-  foreign key (code_poisson) references poissons(code),
-  foreign key (code_zone_peche) references zones_de_peche(code)
-);
 
 
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(1, 'VII');
