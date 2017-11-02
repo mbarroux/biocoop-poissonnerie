@@ -5,10 +5,13 @@
 
 
 <div class="container">
-  <h1 th:text="'Liste des poissons commercialisables au' + ${dateDuJour}"/>
+  <h1 th:text="'Liste des poissons commercialisables au ' + ${dateDuJour}"/>
 
   <ul th:each="poisson : ${poissons}">
-    <li th:text="${poisson.espece}" th:href="'/poisson/' + ${poisson.code}" />
+    <li><a href="/poisson/fichePoisson.html"
+           th:href="@{'/poisson/'+${poisson.code}}"
+           th:text="${poisson.espece}" />
+    </li>
   </ul>
 </div>
 
