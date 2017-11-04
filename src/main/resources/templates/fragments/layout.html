@@ -14,13 +14,13 @@
     <nav class="navbar navbar-default navbar-static-top navbar-inverse">
         <div class="container">
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li th:class="${menu == 'index' ? 'active' : ''}">
                     <a href="/"><span class="glyphicon glyphicon-home"></span> Accueil</a>
                 </li>
-                <li>
+                <li th:class="${menu == 'poissons-fiches' ? 'active' : ''}">
                     <a href="/poissons-fiches"><span class="glyphicon glyphicon-search"></span> Trouver une espèce de poisson</a>
                 </li>
-                <li>
+                <li th:class="${menu == 'poissons-commercialisables' ? 'active' : ''}">
                     <a href="/poissons-commercialisables"><span class="glyphicon glyphicon-th-list"></span> Liste des poissons commercialisables</a>
                 </li>
             </ul>
