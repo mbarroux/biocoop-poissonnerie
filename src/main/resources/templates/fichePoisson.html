@@ -5,7 +5,10 @@
 
 
 <div class="container">
-  <h1 th:text="'Fiche ' + ${poisson.type} + ' : ' + ${poisson.espece}" />
+
+  <div class="page-header">
+    <h1 th:text="'Fiche ' + ${poisson.type} + ' : ' + ${poisson.espece}" />
+  </div>
 
   <div class="pull-right">
     <button type="button" class="btn btn-success" th:if="${poisson.commercialisationPossible}"><span class="glyphicon glyphicon-ok"></span> Commercialisable</button>

@@ -6,7 +6,9 @@
 
 
 <div class="container">
-  <h1 th:text="'Liste des poissons commercialisables au ' + ${dateDuJour}"/>
+  <div class="page-header">
+    <h1 th:text="'Liste des poissons commercialisables au ' + ${dateDuJour}"/>
+  </div>
 
   <ul th:each="poisson : ${poissons}">
     <li><a href="/poisson/fichePoisson.html"
