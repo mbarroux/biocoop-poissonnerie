@@ -7,7 +7,7 @@ var delay = (function(){
 })();
 
 $("#searchPoisson").keyup(function(){
-    delay(function(){
+    //delay(function(){
     var q = $("#searchPoisson").val();
     $.getJSON("/poisson/findByNom?nom" + q,
         function(data) {
@@ -22,5 +22,5 @@ $("#searchPoisson").keyup(function(){
             });
             $results.append("</ul>");
         });
-    }, 500 );
+    //}, 500 );
 });
