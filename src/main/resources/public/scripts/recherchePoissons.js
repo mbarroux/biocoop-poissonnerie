@@ -16,13 +16,11 @@ $("#searchPoisson").keyup(function(){
                 $results.empty();
                 $results.append("<ul>");
 
-                console.log("data = ", data);
-
                 $.each(data, function(i, poisson){
                     $results.append("<li><a href='/poisson/" + poisson.code + "'>" + poisson.espece + "</a></li>");
                 });
                 $results.append("</ul>");
             }
         );
-    }, 500 );
+    }, 300 );
 });
