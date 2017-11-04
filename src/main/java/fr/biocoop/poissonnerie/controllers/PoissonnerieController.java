@@ -50,10 +50,14 @@ public class PoissonnerieController {
 
     @RequestMapping("/poissons-commercialisables")
     String poissonsCommercialisables(Map<String, Object> model) {
-        List<Poisson> poissons = poissonnerieRepository.findAll(new Sort(Sort.Direction.ASC, "espece"));
+        List<Poisson> poissons = poissonnerieRepository.findByDateDebutVenteMonthLessThanEqualAndDateFinVenteMonthGreaterThanEqual(
+                LocalDate.now().getMonthValue()
+        );
 
-        // TODO prendre en compte la date
-        model.put("poissons", poissons.stream().map(this::toPoissonDto).collect(toList()));
+        model.put("poissons", poissons.stream()
+                .map(this::toPoissonDto)
+                .sorted(comparing(PoissonDto::getEspece))
+                .collect(toList()));
         model.put("dateDuJour", DF.format(LocalDate.now()));
 
         return "poissons-commercialisables";
