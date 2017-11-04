@@ -9,20 +9,22 @@ var delay = (function(){
 $("#searchPoisson").keyup(function(){
     delay(function(){
         var q = $("#searchPoisson").val();
-        $.getJSON(
-            "/poisson/findByNom?nom=" + q,
-            function(data) {
-            var $results = $("#search-results");
-                $results.empty();
-                $results.append("<ul>");
+        if(q.length >= 3){ // run search only when at least 3 characters are typed
+            $.getJSON(
+                "/poisson/findByNom?nom=" + q,
+                function(data) {
+                var $results = $("#search-results");
+                    $results.empty();
+                    $results.append("<ul>");
 
-                console.log("data = ", data);
+                    console.log("data = ", data);
 
-                $.each(data.search, function(i, poisson){
-                    $results.append("<li><a href='/poisson/" + poisson.code + "'>" + poisson.espece + "</a></li>");
-                });
-                $results.append("</ul>");
-            }
-        );
+                    $.each(data, function(i, poisson){
+                        $results.append("<li><a href='/poisson/" + poisson.code + "'>" + poisson.espece + "</a></li>");
+                    });
+                    $results.append("</ul>");
+                }
+            );
+        }
     }, 500 );
 });
