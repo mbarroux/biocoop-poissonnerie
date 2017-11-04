@@ -11,7 +11,10 @@
 
   <p th:text="'Dates de commercialisation possible : de ' + ${poisson.dateDebutVente} + ' à ' + ${poisson.dateFinVente}" />
 
-  <p th:text="'Commercialisation possible le ' + ${dateDuJour} + ' ? ' + (${poisson.commercialisationPossible}? 'Oui' : 'Non')"/>
+  <p th:text="'Commercialisation possible le ' + ${dateDuJour} + ' ?')">
+    <button type="button" class="btn btn-success" th:if="${poisson.commercialisationPossible}"><span class="glyphicon glyphicon-ok"></span> Commercialisable</button>
+    <button type="button" class="btn btn-danger" th:if="${poisson.commercialisationPossible}"><span class="glyphicon glyphicon glyphicon-remove"></span> Non commercialisable</button>
+  </p>
 
   <p>Zones de pêche FAO :</p>
 
