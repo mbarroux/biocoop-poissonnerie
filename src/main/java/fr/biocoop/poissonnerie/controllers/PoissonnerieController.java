@@ -50,7 +50,7 @@ public class PoissonnerieController {
 
     @RequestMapping("/poissons-commercialisables")
     String poissonsCommercialisables(Map<String, Object> model) {
-        List<Poisson> poissons = poissonnerieRepository.findByDateDebutVenteMonthLessThanEqualAndDateFinVenteMonthGreaterThanEqual(
+        List<Poisson> poissons = poissonnerieRepository.findByDateDebutVente_MonthLessThanEqualAndDateFinVente_MonthGreaterThanEqual(
                 LocalDate.now().getMonthValue()
         );
 
