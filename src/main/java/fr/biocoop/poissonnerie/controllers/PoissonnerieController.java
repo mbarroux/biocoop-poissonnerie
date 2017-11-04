@@ -43,7 +43,14 @@ public class PoissonnerieController {
     }
 
     @RequestMapping("/poissons-fiches")
-    String fichesPoissons() {
+    String fichesPoissons(Map<String, Object> model) {
+        List<Poisson> poissons = poissonnerieRepository.findAll();
+
+        model.put("poissons", poissons.stream()
+                .map(this::toPoissonDto)
+                .sorted(comparing(PoissonDto::getEspece))
+                .collect(toList()));
+
         return "poissons-fiches";
     }
 

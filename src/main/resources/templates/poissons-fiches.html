@@ -6,7 +6,23 @@
 
 <div class="container">
   <h1>Fiches poisson</h1>
-  <!-- TODO -->
+
+  <form>
+    <div class="form-group">
+      <label for="searchPoisson">Rechercher</label>
+      <input type="text" class="form-control" id="searchPoisson" placeholder="Rechercher">
+    </div>
+  </form>
+
+  <div id="search-results">
+    <ul th:each="poisson : ${poissons}">
+      <li><a href="/poisson/fichePoisson.html"
+             th:href="@{'/poisson/'+${poisson.code}}"
+             th:text="${poisson.espece}" />
+      </li>
+    </ul>
+  </div>
+
 </div>
 
 </body>
