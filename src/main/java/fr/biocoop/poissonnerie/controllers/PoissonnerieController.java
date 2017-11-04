@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -53,21 +52,13 @@ public class PoissonnerieController {
         List<Poisson> poissons = poissonnerieRepository.findAll();
 
         model.put("poissons", poissons.stream()
-                .filter(this::isCommercialisable)
                 .map(this::toPoissonDto)
+                .filter(PoissonDto::isCommercialisationPossible)
                 .sorted(comparing(PoissonDto::getEspece))
                 .collect(toList()));
         model.put("dateDuJour", DF.format(LocalDate.now()));
 
         return "poissons-commercialisables";
-    }
-
-    private boolean isCommercialisable(Poisson poisson){
-        int monthDebutVente = poisson.getDateDebutVente().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
-        int monthFinVente = poisson.getDateFinVente().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
-        int monthCurrent = LocalDate.now().getMonthValue();
-        boolean isCurrentMonthBetween = monthDebutVente <= monthCurrent && monthFinVente >= monthCurrent;
-        return monthDebutVente > monthFinVente ? !isCurrentMonthBetween : isCurrentMonthBetween;
     }
 
     @RequestMapping("/poisson/findByNom")

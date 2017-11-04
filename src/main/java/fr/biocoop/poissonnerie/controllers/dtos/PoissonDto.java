@@ -2,10 +2,10 @@ package fr.biocoop.poissonnerie.controllers.dtos;
 
 import fr.biocoop.poissonnerie.repositories.entities.TypePoisson;
 
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -118,11 +118,10 @@ public class PoissonDto {
     }
 
     private boolean commercialisationPossible(Date dateDebut, Date dateFin) {
-        LocalDate debutJour = LocalDate.now();
-        LocalDate dateDebutVente = ((java.sql.Date) dateDebut).toLocalDate();
-        LocalDate dateFinVente = ((java.sql.Date) dateFin).toLocalDate();
-
-        return (debutJour.isAfter(dateDebutVente) || debutJour.isEqual(dateDebutVente))
-                && (debutJour.isBefore(dateFinVente) || debutJour.isEqual(dateFinVente));
+        int monthDebutVente = ((java.sql.Date) dateDebut).toLocalDate().getMonthValue();
+        int monthFinVente = ((java.sql.Date) dateFin).toLocalDate().getMonthValue();
+        int monthCurrent = LocalDate.now().getMonthValue();
+        boolean isCurrentMonthBetween = monthDebutVente <= monthCurrent && monthFinVente >= monthCurrent;
+        return monthDebutVente > monthFinVente ? !isCurrentMonthBetween : isCurrentMonthBetween;
     }
 }
