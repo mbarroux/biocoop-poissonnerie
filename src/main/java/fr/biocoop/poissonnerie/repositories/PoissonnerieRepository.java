@@ -10,6 +10,4 @@ import java.util.List;
 public interface PoissonnerieRepository extends JpaRepository<Poisson, Integer> {
 
     List<Poisson> findByEspeceIgnoreCaseContaining(String espece);
-
-    List<Poisson> findByDateDebutVente_MonthLessThanEqualAndDateFinVente_MonthGreaterThanEqual(int moisCommercialisation);
 }

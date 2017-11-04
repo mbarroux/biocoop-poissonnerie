@@ -8,7 +8,6 @@ import fr.biocoop.poissonnerie.repositories.entities.ZonePeche;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -50,17 +50,24 @@ public class PoissonnerieController {
 
     @RequestMapping("/poissons-commercialisables")
     String poissonsCommercialisables(Map<String, Object> model) {
-        List<Poisson> poissons = poissonnerieRepository.findByDateDebutVente_MonthLessThanEqualAndDateFinVente_MonthGreaterThanEqual(
-                LocalDate.now().getMonthValue()
-        );
+        List<Poisson> poissons = poissonnerieRepository.findAll();
 
         model.put("poissons", poissons.stream()
+                .filter(this::isCommercialisable)
                 .map(this::toPoissonDto)
                 .sorted(comparing(PoissonDto::getEspece))
                 .collect(toList()));
         model.put("dateDuJour", DF.format(LocalDate.now()));
 
         return "poissons-commercialisables";
+    }
+
+    private boolean isCommercialisable(Poisson poisson){
+        int monthDebutVente = poisson.getDateDebutVente().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
+        int monthFinVente = poisson.getDateFinVente().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
+        int monthCurrent = LocalDate.now().getMonthValue();
+        boolean isCurrentMonthBetween = monthDebutVente <= monthCurrent && monthFinVente >= monthCurrent;
+        return monthDebutVente > monthFinVente ? !isCurrentMonthBetween : isCurrentMonthBetween;
     }
 
     @RequestMapping("/poisson/findByNom")
