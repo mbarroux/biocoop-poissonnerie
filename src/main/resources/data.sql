@@ -162,7 +162,16 @@ INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(4, 'VI
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche, commentaire) VALUES(5, 'I', 'Northeast Artic pour le surgelé');
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche, commentaire) VALUES(5, 'II', 'Northeast Artic pour le surgelé');
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'Va');
-INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIe'); -- TODO VIIe a-k ???
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIa');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIb');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIc');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIId');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIe');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIf');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIg');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIh');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIj');
+INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(5, 'VIIk');
 
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(6, 'VIIh');
 
@@ -291,7 +300,6 @@ INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(41, 'V
 
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(42, 'VII');
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(42, 'VIII');
---INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(42, '32'); -- TODO la zone de peche 32 n'existe a priori pas ?
 
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(43, 'VIIh');
 INSERT INTO poissons_zones_de_peche(code_poisson, code_zone_peche) VALUES(43, 'VIIIa');
